@@ -1,0 +1,224 @@
+window-rule {
+    match app-id="firefox" at-startup=true
+    match app-id="zen" at-startup=true
+    open-maximized-to-edges true
+    open-on-workspace "main"
+    open-focused true
+}
+
+// window-rule {
+//     match app-id="foot" at-startup=true
+//     open-on-workspace "code"
+// }
+
+window-rule {
+    match app-id="vesktop"
+    open-on-workspace "media"
+    open-maximized-to-edges true
+}
+
+window-rule {
+    match app-id="audacious"
+    open-on-workspace "music"
+}
+
+window-rule {
+    match title="^Spotify(.*)$"
+    match app-id="Spotify"
+    open-maximized-to-edges true
+    open-on-workspace "music"
+    open-focused true
+}
+
+window-rule {
+    match app-id="com.obsproject.Studio"
+    match app-id="obs-studio"
+    open-on-workspace "main-2"
+}
+
+/-window-rule {
+    // Firefox could open some windows and immediately changes its title,
+    // makes rules that try to match the title fail, especialy on add-on's
+    // popup windows and desktop portal. This rule possibly deals with that.
+    match app-id="firefox" title="- (.*) Mozilla Firefox"
+    open-fullscreen false
+    default-column-width { proportion 0.5; }
+    default-window-height { proportion 0.8; }
+}
+
+window-rule {
+    // Open the picture-in-picture as a floating window in the bottom-right
+    // corner.
+    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    match title="^Picture-in-Picture$"
+    open-floating true
+    default-column-width { fixed 560; }
+    default-window-height { fixed 315; }
+    default-floating-position x=10 y=10 relative-to="bottom-right"
+}
+
+window-rule {
+    // Open all other PiP windows in secondary monitor
+    match title="^Picture-in-Picture$"
+    open-on-output "HDMI-A-1"
+    // open-maximized-to-edges true
+}
+
+// window-rule {
+//     // Fix the position of Steam's notification
+//     match app-id="steam" title=r#"^notificationtoasts_\d+_desktop$"#
+//     default-floating-position x=10 y=10 relative-to="bottom-right"
+// }
+
+window-rule {
+    match app-id="steam"
+    open-on-output "DP-1"
+    open-on-workspace "game"
+}
+
+window-rule {
+    // Rule for games running from steam
+    match app-id=r#"^steam_app_\d+"#
+    open-on-workspace "game"
+    open-floating false
+    open-focused true
+    // open-fullscreen true
+    variable-refresh-rate true
+}
+
+window-rule {
+    match app-id="steam" title="Steam Big Picture Mode"
+    open-fullscreen true
+}
+
+// window-rule {
+//     match app-id="^steam_app_(.*)" title="(.*)(SB-Win64-Shipping.exe)"
+//     open-fullscreen false
+// }
+
+window-rule {
+    match app-id="steam" title="Sign in (.*)"
+    open-floating false
+}
+
+window-rule {
+    match app-id="net.lutris.Lutris"
+    open-on-workspace "game"
+}
+
+window-rule {
+    match app-id="gamescope"
+    match app-id="^(.*).exe$"
+    match app-id=r#"\.?x86_64"#
+    open-on-workspace "game"
+    open-focused true
+    open-fullscreen true
+    variable-refresh-rate true
+}
+
+window-rule {
+    match title="^ZenlessZoneZero$"
+    match title="^NTE "
+    open-on-workspace "game"
+    open-focused true
+    open-fullscreen true
+    variable-refresh-rate true
+}
+
+window-rule {
+    match title="^HoYoPlay$"
+    open-fullscreen false
+    open-floating false
+}
+
+window-rule {
+    // Rule for some windows that exist on wind$w but serve no purpose on
+    // linux and always appear on those chinese game launchers.
+    // These windows usually will try to go fullscreen/floating randomly so
+    // this rule handles that.
+    match app-id="^explorer.exe$"
+    match app-id="^steam_app_default$" title="^$"
+    open-on-workspace "game"
+    open-floating false
+    open-fullscreen false
+    open-focused false
+}
+
+window-rule {
+    match app-id="com.libretro.RetroArch"
+    match app-id="desmume"
+    match app-id="net.kuribo64.melonDS"
+    open-maximized-to-edges true
+    variable-refresh-rate true
+}
+
+window-rule {
+    // Enable blur on dolphin's menu
+    match app-id="^org.kde.dolphin$"
+    popups {
+        opacity 0.9
+        geometry-corner-radius 2
+        background-effect {
+            blur true
+        }
+    }
+}
+
+// window-rule {
+//     match title="^Copying — Dolphin$"
+//     match title="^Moving — Dolphin$"
+//     open-floating false
+// }
+
+window-rule {
+    match app-id="ark" title="^File Already Exists — Ark$"
+    match app-id="ark" title="(Extracting)(.*)"
+    open-floating true
+}
+
+window-rule {
+    // Rules for windows that usually are floating windows
+    match title="^(Open|Choose|Save)(.*)$"
+    // match title="(Input Method)(.*)"
+    match app-id="(xdg-desktop-portal)(.*)"
+    match app-id="xdg-desktop-portal-gtk"
+    match app-id="org.freedesktop.impl.portal.desktop.kde"
+    match app-id="filepicker"
+    open-floating true
+    open-fullscreen false
+}
+
+window-rule {
+    match app-id="com.github.hluk.copyq"
+    open-floating true
+    min-width 800
+    min-height 540
+    default-column-width { proportion 0.5; }
+    default-window-height { proportion 0.6; }
+}
+
+window-rule {
+    match app-id="^mpv$"
+    open-maximized true
+    tiled-state true
+    variable-refresh-rate true
+}
+
+window-rule {
+    match app-id="org.kde.haruna"
+    variable-refresh-rate true
+}
+
+// window-rule {
+//     // Highlight screencasted windows
+//    match is-window-cast-target=true
+//    border {
+//        active-color "#887043"
+//    }
+//    shadow {
+//        color "#88704370"
+//    }
+//    tab-indicator {
+//        active-color "#887043"
+//    }
+// }

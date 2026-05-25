@@ -1,0 +1,536 @@
+environment {
+    // STEAM_FORCE_DESKTOPUI_SCALING "1.5"
+    GTK_USE_PORTAL "1"
+
+    // Input method - NOTE: Prefer these on ~/.profile
+    // https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland
+    //
+    // GTK_IM_MODULE "fcitx"
+    // XMODIFIERS "@im=fcitx"
+
+    // This is on Niri instead of ~/.profile, as Plasma doesn't like that.
+    // https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland#KDE_Plasma
+    //
+    QT_IM_MODULES "wayland;fcitx"
+}
+
+// ---------------------------------------------------------
+
+// Check out '~/.config/systemd/user/niri.service.wants/' to add a service to
+// niri session at startup use:
+// `systemctl --user add-wants niri.service SERVICE`
+spawn-at-startup "/usr/lib/polkit-kde-authentication-agent-1"
+spawn-at-startup "/usr/lib/pam_kwallet_init"
+
+//spawn-at-startup "kded6"
+//spawn-sh-at-startup "dolphin --daemon"
+
+// Preserve data in clipboard after the application is closed, set to
+// `regular` instead of `both` to solve the weird unselecting text.
+// https://github.com/hyprwm/Hyprland/issues/2619#issuecomment-1620896059
+spawn-sh-at-startup "wl-clip-persist --clipboard regular"
+
+spawn-at-startup "sunsetr"
+spawn-at-startup "waypaper" "--restore"
+spawn-at-startup "fcitx5" "-d"
+spawn-at-startup "elephant"
+spawn-at-startup "walker" "--gapplication-service"
+spawn-at-startup "zen-browser"
+// spawn-at-startup "foot" "--server"
+
+// ---------------------------------------------------------
+
+output "DP-1" {
+    mode "2560x1440@180"
+    scale 1.25
+    position x=0 y=0
+    variable-refresh-rate on-demand=true
+    focus-at-startup
+    hot-corners {
+        bottom-right
+    }
+}
+
+output "HDMI-A-1" {
+    mode "1920x1080@60"
+    scale 1.25
+    // position x=384 y=1152
+    // position x=320 y=1440
+    position x=256 y=1152
+    variable-refresh-rate
+    layout {
+        default-column-width { proportion 1.0; }
+    }
+    hot-corners {
+        bottom-right
+    }
+}
+
+// ---------------------------------------------------------
+
+input {
+    keyboard {
+        xkb {
+            layout "us"
+
+            // NOTE: Don't need keybind options in here as I already have keys
+            // mapping at the hardware level.
+            //
+            // options "caps:swapescape"
+        }
+    }
+
+    touchpad {
+        tap
+        natural-scroll
+    }
+
+    mouse {
+        // The smaller the number the slower it gets
+        // accel-speed -0.7
+        accel-profile "flat"
+    }
+
+    workspace-auto-back-and-forth
+    // focus-follows-mouse max-scroll-amount="0%"
+}
+
+layout {
+    // [Constraint] Range 0-4
+    // 2 * 1.25 = 2.5px. (Must pair with border).
+    gaps 2 // 0|9
+
+    // [Constraint] Range 16-26
+    // Left/Right 24 -> 30.0 physical px.
+    // Top/Bottom 20 -> 25.0 physical px.
+    struts {
+        left 24
+        right 24
+        top 20
+        bottom 20
+    }
+
+    focus-ring {
+        on
+        width 0
+        active-color "#535659" // #535659
+        inactive-color "#181a19" // #181a19 "#0d0e0e"
+    }
+
+    border {
+        on
+        width 2
+        active-color "#7f8a50" // #9c925f #78834b
+        inactive-color "#7f8a5050" // #35373a #342f2c #2c2e31
+        urgent-color "#b97643"
+    }
+
+    center-focused-column "never"
+    always-center-single-column
+
+    preset-column-widths {
+        proportion 0.5
+        proportion 0.66667
+        proportion 1.0
+    }
+    default-column-width { proportion 0.5; }
+    preset-window-heights {
+        proportion 0.5
+        proportion 1.0
+    }
+
+    shadow {
+        on
+        // softness 2
+        // spread 0
+        // offset x=4 y=8
+        color "#0009"
+    }
+
+    tab-indicator {
+        hide-when-single-tab
+        width 4
+    }
+
+    insert-hint { color "#ffc87f80"; }
+
+    // With this the workspace will use the overview's background as its own
+    // NOTE: Should use along side wallpaper layer-rule.
+    //
+    background-color "transparent"
+}
+
+overview {
+    backdrop-color "#131313"
+    workspace-shadow {
+        on
+        softness 10
+        spread 5
+        offset x=0 y=0
+        color "#0009"
+    }
+    zoom 0.25
+}
+
+animations {
+    // Values below 1 speed them up instead.
+    slowdown 1
+
+    // Slower, long gliding, no bouncing
+    workspace-switch {
+        off
+        //spring damping-ratio=0.8 stiffness=300 epsilon=0.0001
+        spring damping-ratio=1.0 stiffness=350 epsilon=0.0001
+    }
+    horizontal-view-movement {
+        //spring damping-ratio=0.85 stiffness=350 epsilon=0.0001
+        spring damping-ratio=1.0 stiffness=350 epsilon=0.0001
+    }
+    window-movement {
+        spring damping-ratio=1.0 stiffness=350 epsilon=0.0001
+    }
+    window-resize {
+        spring damping-ratio=1.0 stiffness=350 epsilon=0.0001
+    }
+    overview-open-close {
+        spring damping-ratio=1.0 stiffness=350 epsilon=0.0001
+    }
+    recent-windows-close {
+        spring damping-ratio=1.0 stiffness=350 epsilon=0.001
+    }
+
+    // Faster start, smooth finish
+    window-open {
+        duration-ms 250
+        curve "ease-out-expo"
+    }
+    window-close {
+        duration-ms 250
+        curve "ease-out-expo"
+    }
+    screenshot-ui-open {
+        duration-ms 250
+        curve "ease-out-expo"
+    }
+
+    // Subtle bounce
+    config-notification-open-close {
+        spring damping-ratio=0.6 stiffness=400 epsilon=0.001
+    }
+    exit-confirmation-open-close {
+        spring damping-ratio=0.6 stiffness=400 epsilon=0.01
+    }
+}
+
+blur {
+    on
+    // passes 4
+    // offset 5
+    // noise 0.02
+    // saturation 1
+}
+
+cursor {
+    xcursor-theme "breeze_cursors"
+    xcursor-size 24
+    hide-when-typing
+    hide-after-inactive-ms 10000
+}
+
+recent-windows {
+    highlight {
+        active-color "#808368"
+        urgent-color "#b97643"
+    }
+    previews {
+        max-scale 0.5
+    }
+}
+
+// Named workspaces are added one after another.
+workspace "main"   { open-on-output "DP-1"; }
+workspace "code"   { open-on-output "DP-1"; }
+workspace "config" { open-on-output "DP-1"; }
+workspace "game"   { open-on-output "DP-1"; }
+workspace "main-2" { open-on-output "HDMI-A-1"; }
+workspace "media"  { open-on-output "HDMI-A-1"; }
+workspace "music"  { open-on-output "HDMI-A-1"; }
+
+// ---------------------------------------------------------
+
+gestures {
+    dnd-edge-view-scroll {
+        trigger-width 100
+        delay-ms 100
+        max-speed 3000
+    }
+    hot-corners {
+        off
+    }
+}
+
+// If the client will specifically ask for CSD, the request will be honored.
+// Additionally, clients will be informed that they are tiled, removing some
+// client-side rounded corners.
+// This option will also fix border/focus ring drawing behind some
+// semitransparent windows.
+//
+prefer-no-csd
+
+screenshot-path "~/Pictures/Screenshots/Screenshot %Y-%m-%d %H%M%S.png"
+
+hotkey-overlay {
+    skip-at-startup
+    hide-not-bound
+}
+
+// ---------------------------------------------------------
+
+// Put swaybg "wallpaper" into the bottom layer so it can act like a wallpaper
+// for the overview.
+// NOTE: Should use along side `background-color "transparent"` in layout.
+layer-rule {
+    match namespace="wallpaper"
+    place-within-backdrop true
+    background-effect {
+        blur true
+    }
+}
+
+// Enable blur on app launchers
+layer-rule {
+    match namespace="overlay"
+    background-effect {
+        blur true
+    }
+}
+
+// Disable xray blur on top and  overlay layers
+layer-rule {
+    match layer="top"
+    match layer="overlay"
+    background-effect {
+        xray false
+    }
+}
+
+// Enable shadow on focused windows
+// window-rule {
+//     match is-focused=true
+//     shadow {
+//         on
+//     }
+// }
+
+// Weaker shadow on unfocused windows
+window-rule {
+    match is-focused=false
+    shadow {
+        color "#0006"
+    }
+}
+
+// Disable xray blur globally
+// window-rule {
+//     background-effect {
+//         blur true
+//         xray false
+//     }
+// }
+
+// Enable xray blur on non-floating windows
+window-rule {
+    match is-floating=false
+    background-effect {
+        blur true
+    }
+}
+
+// Disable xray blur on floating windows
+window-rule {
+    match is-floating=true
+    background-effect {
+        blur true
+        xray false
+    }
+}
+
+// Enable rounded corners
+window-rule {
+    geometry-corner-radius 0 // 2/3/6|8
+    clip-to-geometry true
+    draw-border-with-background false
+}
+
+// Additional bloated random rules
+include "random-window-rules.kdl"
+
+// ---------------------------------------------------------
+
+binds {
+    Mod+Shift+Slash { show-hotkey-overlay; }
+
+    Mod+Space repeat=false { spawn "walker"; }
+    Mod+A     repeat=false { spawn-sh "pkill wiremix || foot wiremix"; }
+    Mod+B     repeat=false { spawn-sh "pkill bluetui || foot bluetui"; }
+    Mod+W     repeat=false { spawn-sh "pkill impala || foot impala"; }
+
+    XF86AudioRaiseVolume allow-when-locked=true {
+        spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.02+"
+    }
+    XF86AudioLowerVolume allow-when-locked=true {
+        spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.02-"
+    }
+    XF86AudioMute allow-when-locked=true {
+        spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+    }
+    XF86AudioMicMute allow-when-locked=true {
+        spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+    }
+    XF86AudioPlay allow-when-locked=true { spawn-sh "playerctl play-pause"; }
+    XF86AudioNext allow-when-locked=true { spawn-sh "playerctl next"; }
+    XF86AudioPrev allow-when-locked=true { spawn-sh "playerctl previous"; }
+
+    Mod+Tab repeat=false { toggle-overview; }
+
+    Mod+Q { close-window; }
+
+    Mod+H          { focus-column-left; }
+    Mod+J          { focus-window-or-workspace-down; }
+    Mod+K          { focus-window-or-workspace-up; }
+    Mod+L          { focus-column-right; }
+    Mod+Left       { focus-column-left; }
+    Mod+Down       { focus-window-or-workspace-down; }
+    Mod+Up         { focus-window-or-workspace-up; }
+    Mod+Right      { focus-column-right; }
+    Mod+Ctrl+H     { move-column-left; }
+    Mod+Ctrl+J     { move-window-down-or-to-workspace-down; }
+    Mod+Ctrl+K     { move-window-up-or-to-workspace-up; }
+    Mod+Ctrl+L     { move-column-right; }
+    Mod+Ctrl+Left  { move-column-left; }
+    Mod+Ctrl+Down  { move-window-down-or-to-workspace-down; }
+    Mod+Ctrl+Up    { move-window-up-or-to-workspace-up; }
+    Mod+Ctrl+Right { move-column-right; }
+
+    Mod+BracketLeft       { focus-column-first; }
+    Mod+BracketRight      { focus-column-last; }
+    Mod+Ctrl+BracketLeft  { move-column-to-first; }
+    Mod+Ctrl+BracketRight { move-column-to-last; }
+
+    Mod+Shift+H      { focus-monitor-left; }
+    Mod+Shift+J      { focus-monitor-down; }
+    Mod+Shift+K      { focus-monitor-up; }
+    Mod+Shift+L      { focus-monitor-right; }
+    Mod+Shift+Ctrl+H { move-column-to-monitor-left; }
+    Mod+Shift+Ctrl+J { move-column-to-monitor-down; }
+    Mod+Shift+Ctrl+K { move-column-to-monitor-up; }
+    Mod+Shift+Ctrl+L { move-column-to-monitor-right; }
+
+    Mod+Shift+Ctrl+Left  { move-workspace-to-monitor-left; }
+    Mod+Shift+Ctrl+Down  { move-workspace-to-monitor-down; }
+    Mod+Shift+Ctrl+Up    { move-workspace-to-monitor-up; }
+    Mod+Shift+Ctrl+Right { move-workspace-to-monitor-right; }
+
+    Mod+D      { focus-workspace-down; }
+    Mod+U      { focus-workspace-up; }
+    Mod+Ctrl+D { move-column-to-workspace-down; }
+    Mod+Ctrl+U { move-column-to-workspace-up; }
+
+    // Mod+Shift+D { move-workspace-down; }
+    // Mod+Shift+U { move-workspace-up; }
+
+    Mod+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
+    Mod+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
+    Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
+    Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
+
+    Alt+WheelScrollDown      cooldown-ms=50 { focus-column-right; }
+    Alt+WheelScrollUp        cooldown-ms=50 { focus-column-left; }
+    Alt+Ctrl+WheelScrollDown cooldown-ms=50 { move-column-right; }
+    Alt+Ctrl+WheelScrollUp   cooldown-ms=50 { move-column-left; }
+
+    Mod+Shift+WheelScrollDown      cooldown-ms=50 { focus-column-right; }
+    Mod+Shift+WheelScrollUp        cooldown-ms=50 { focus-column-left; }
+    Mod+Ctrl+Shift+WheelScrollDown cooldown-ms=50 { move-column-right; }
+    Mod+Ctrl+Shift+WheelScrollUp   cooldown-ms=50 { move-column-left; }
+
+    Mod+1 { focus-workspace "main"; }
+    Mod+2 { focus-workspace "code"; }
+    Mod+3 { focus-workspace "config"; }
+    Mod+4 { focus-workspace "game"; }
+    Mod+8 { focus-workspace "music"; }
+    Mod+9 { focus-workspace "media"; }
+    Mod+0 { focus-workspace "main-2"; }
+
+    Mod+Ctrl+1 { move-column-to-workspace "main"; }
+    Mod+Ctrl+2 { move-column-to-workspace "code"; }
+    Mod+Ctrl+3 { move-column-to-workspace "config"; }
+    Mod+Ctrl+4 { move-column-to-workspace "game"; }
+    Mod+Ctrl+8 { move-column-to-workspace "music"; }
+    Mod+Ctrl+9 { move-column-to-workspace "media"; }
+    Mod+Ctrl+0 { move-column-to-workspace "main-2"; }
+
+    Mod+O { focus-workspace-previous; }
+
+    Mod+Comma        { consume-or-expel-window-left; }
+    Mod+Period       { consume-or-expel-window-right; }
+
+    // Consume one window from the right to the bottom of the focused column.
+    Mod+Shift+Comma  { consume-window-into-column; }
+    // Expel the bottom window from the focused column to the right.
+    Mod+Shift+Period { expel-window-from-column; }
+
+    Mod+R       { switch-preset-column-width; }
+    Mod+Shift+R { switch-preset-window-height; }
+    Mod+Ctrl+R  { reset-window-height; }
+
+    Mod+G       { maximize-window-to-edges; }
+    Mod+Shift+G { expand-column-to-available-width; }
+    Mod+F       { maximize-column; }
+    Mod+Shift+F { fullscreen-window; }
+    Mod+Ctrl+F  { toggle-windowed-fullscreen; } // Fake fullscreen
+
+    Mod+C      { center-column; }
+    Mod+Ctrl+C { center-visible-columns; }
+
+    Mod+Minus       { set-column-width "-10%"; }
+    Mod+Equal       { set-column-width "+10%"; }
+    Mod+Shift+Minus { set-window-height "-10%"; }
+    Mod+Shift+Equal { set-window-height "+10%"; }
+
+    Mod+V { toggle-window-floating; }
+    Mod+S { switch-focus-between-floating-and-tiling; }
+
+    // NOTE: It's the `'` symbol
+    Mod+Apostrophe { toggle-column-tabbed-display; }
+
+    Shift+Print { screenshot show-pointer=false; } // Area Screenshot
+    Print       { screenshot-screen show-pointer=false; }
+    Alt+Print   { screenshot-window show-pointer=false; }
+
+    // Applications such as remote-desktop clients and software KVM switches may
+    // request that niri stops processing the keyboard shortcuts defined here so
+    // they may, for example, forward the key presses as-is to a remote machine.
+    // It's a good idea to bind an escape hatch to toggle the inhibitor, so a
+    // buggy application can't hold your session hostage.
+    Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+
+    Mod+Shift+Q     { quit; }
+    Ctrl+Alt+Delete { quit; }
+
+    Mod+Shift+P { power-off-monitors; }
+
+    Mod+T         { spawn "foot"; }
+    Mod+E         { spawn "dolphin"; }
+    Mod+Alt+L     { spawn "hyprlock"; }
+    Mod+Ctrl+P    { spawn-sh "hyprpicker -a -n"; } // Pick color
+    Mod+Backslash { spawn-sh "pkill sunsetr || sunsetr"; } // Nightlight
+    Mod+Ctrl+N    { spawn-sh "foot nvim ~/Desktop/notes/"; } // Quick note
+
+    // Mod+Return repeat=false hotkey-overlay-title="Toggle copyq" {
+    //     spawn-sh "copyq toggle || copyq --start-server show"
+    // }
+
+    Mod+Page_Up   { spawn-sh "obs"; }
+    Mod+Page_Down { spawn-sh "obs-cmd recording toggle"; }
+}

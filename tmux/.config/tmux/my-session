@@ -1,0 +1,4 @@
+new -s linh -n "run"
+neww -n "conf"
+neww -n "dev"
+selectw -t 1
