@@ -3,7 +3,7 @@
 
 TARGET="$1"
 
-if [ -z "$TARGET" ]; then
+if [ "$TARGET" = "" ]; then
     echo "Error: No target specified."
     echo "Usage: $0 <string-to-match>"
     exit 1

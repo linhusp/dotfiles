@@ -1,5 +1,4 @@
 environment {
-    // STEAM_FORCE_DESKTOPUI_SCALING "1.5"
     GTK_USE_PORTAL "1"
 
     // Input method - NOTE: Prefer these on ~/.profile
@@ -19,36 +18,31 @@ environment {
 // Check out '~/.config/systemd/user/niri.service.wants/' to add a service to
 // niri session at startup use:
 // `systemctl --user add-wants niri.service SERVICE`
-spawn-at-startup "/usr/lib/polkit-kde-authentication-agent-1"
-spawn-at-startup "/usr/lib/pam_kwallet_init"
-
-//spawn-at-startup "kded6"
-//spawn-sh-at-startup "dolphin --daemon"
 
 // Preserve data in clipboard after the application is closed, set to
 // `regular` instead of `both` to solve the weird unselecting text.
 // https://github.com/hyprwm/Hyprland/issues/2619#issuecomment-1620896059
 spawn-sh-at-startup "wl-clip-persist --clipboard regular"
 
+spawn-at-startup "/usr/lib/polkit-kde-authentication-agent-1"
+spawn-at-startup "/usr/lib/pam_kwallet_init"
 spawn-at-startup "sunsetr"
 spawn-at-startup "waypaper" "--restore"
 spawn-at-startup "fcitx5" "-d"
 spawn-at-startup "elephant"
 spawn-at-startup "walker" "--gapplication-service"
 spawn-at-startup "zen-browser"
-// spawn-at-startup "foot" "--server"
+spawn-at-startup "foot" "--server"
 
 // ---------------------------------------------------------
 
 output "DP-1" {
-    mode "2560x1440@180"
+    mode "2560x1440"
     scale 1.25
     position x=0 y=0
     variable-refresh-rate on-demand=true
     focus-at-startup
-    hot-corners {
-        bottom-right
-    }
+    hot-corners { bottom-right; }
 }
 
 output "HDMI-A-1" {
@@ -58,27 +52,14 @@ output "HDMI-A-1" {
     // position x=320 y=1440
     position x=256 y=1152
     variable-refresh-rate
-    layout {
-        default-column-width { proportion 1.0; }
-    }
-    hot-corners {
-        bottom-right
-    }
+    layout { default-column-width { proportion 1.0; }; }
+    hot-corners { bottom-right; }
 }
 
 // ---------------------------------------------------------
 
 input {
-    keyboard {
-        xkb {
-            layout "us"
-
-            // NOTE: Don't need keybind options in here as I already have keys
-            // mapping at the hardware level.
-            //
-            // options "caps:swapescape"
-        }
-    }
+    keyboard { xkb { layout "us"; }; }
 
     touchpad {
         tap
@@ -104,8 +85,8 @@ layout {
     // Left/Right 24 -> 30.0 physical px.
     // Top/Bottom 20 -> 25.0 physical px.
     struts {
-        left 24
-        right 24
+        left 20
+        right 20
         top 20
         bottom 20
     }
@@ -113,14 +94,14 @@ layout {
     focus-ring {
         on
         width 0
-        active-color "#535659" // #535659
+        active-color "#181a19" // #535659
         inactive-color "#181a19" // #181a19 "#0d0e0e"
     }
 
     border {
         on
         width 2
-        active-color "#7f8a50" // #9c925f #78834b
+        active-color "#808368" // #9c925f #78834b #75875f
         inactive-color "#7f8a5050" // #35373a #342f2c #2c2e31
         urgent-color "#b97643"
     }
@@ -129,9 +110,9 @@ layout {
     always-center-single-column
 
     preset-column-widths {
+        proportion 0.33333
         proportion 0.5
         proportion 0.66667
-        proportion 1.0
     }
     default-column-width { proportion 0.5; }
     preset-window-heights {
@@ -196,6 +177,7 @@ animations {
         spring damping-ratio=1.0 stiffness=350 epsilon=0.0001
     }
     recent-windows-close {
+        off
         spring damping-ratio=1.0 stiffness=350 epsilon=0.001
     }
 
@@ -242,9 +224,7 @@ recent-windows {
         active-color "#808368"
         urgent-color "#b97643"
     }
-    previews {
-        max-scale 0.5
-    }
+    previews { max-scale 0.5; }
 }
 
 // Named workspaces are added one after another.
@@ -264,9 +244,7 @@ gestures {
         delay-ms 100
         max-speed 3000
     }
-    hot-corners {
-        off
-    }
+    hot-corners { off; }
 }
 
 // If the client will specifically ask for CSD, the request will be honored.
@@ -292,26 +270,20 @@ hotkey-overlay {
 layer-rule {
     match namespace="wallpaper"
     place-within-backdrop true
-    background-effect {
-        blur true
-    }
+    background-effect { blur true; }
 }
 
 // Enable blur on app launchers
 layer-rule {
     match namespace="overlay"
-    background-effect {
-        blur true
-    }
+    background-effect { blur true; }
 }
 
 // Disable xray blur on top and  overlay layers
 layer-rule {
     match layer="top"
     match layer="overlay"
-    background-effect {
-        xray false
-    }
+    background-effect { xray false; }
 }
 
 // Enable shadow on focused windows
@@ -325,9 +297,7 @@ layer-rule {
 // Weaker shadow on unfocused windows
 window-rule {
     match is-focused=false
-    shadow {
-        color "#0006"
-    }
+    shadow { color "#0006"; }
 }
 
 // Disable xray blur globally
@@ -341,9 +311,7 @@ window-rule {
 // Enable xray blur on non-floating windows
 window-rule {
     match is-floating=false
-    background-effect {
-        blur true
-    }
+    background-effect { blur true; }
 }
 
 // Disable xray blur on floating windows
@@ -403,6 +371,7 @@ binds {
     Mod+Down       { focus-window-or-workspace-down; }
     Mod+Up         { focus-window-or-workspace-up; }
     Mod+Right      { focus-column-right; }
+
     Mod+Ctrl+H     { move-column-left; }
     Mod+Ctrl+J     { move-window-down-or-to-workspace-down; }
     Mod+Ctrl+K     { move-window-up-or-to-workspace-up; }
@@ -421,6 +390,7 @@ binds {
     Mod+Shift+J      { focus-monitor-down; }
     Mod+Shift+K      { focus-monitor-up; }
     Mod+Shift+L      { focus-monitor-right; }
+
     Mod+Shift+Ctrl+H { move-column-to-monitor-left; }
     Mod+Shift+Ctrl+J { move-column-to-monitor-down; }
     Mod+Shift+Ctrl+K { move-column-to-monitor-up; }
@@ -526,10 +496,6 @@ binds {
     Mod+Ctrl+P    { spawn-sh "hyprpicker -a -n"; } // Pick color
     Mod+Backslash { spawn-sh "pkill sunsetr || sunsetr"; } // Nightlight
     Mod+Ctrl+N    { spawn-sh "foot nvim ~/Desktop/notes/"; } // Quick note
-
-    // Mod+Return repeat=false hotkey-overlay-title="Toggle copyq" {
-    //     spawn-sh "copyq toggle || copyq --start-server show"
-    // }
 
     Mod+Page_Up   { spawn-sh "obs"; }
     Mod+Page_Down { spawn-sh "obs-cmd recording toggle"; }
