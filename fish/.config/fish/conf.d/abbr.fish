@@ -24,6 +24,7 @@ abbr -ag rename --position anywhere 'mmv'
 abbr -ag clock --set-cursor 'tty-clock -c%'
 abbr -ag pick --set-cursor 'hyprpicker%'
 abbr -ag sv 'sudo -Es nvim'
+abbr -ag svd 'sudo -Es nvim -d'
 abbr -ag hh --position anywhere --set-cursor '~/%'
 abbr -ag hhd --position anywhere --set-cursor '~/.%'
 abbr -ag sf --set-cursor 'exec fish%'
@@ -59,7 +60,8 @@ abbr -ag nr --set-cursor 'niri-session%'
 # abbr -ag wp --set-cursor 'wl-paste > %'
 
 # Get the best rated mirrors
-abbr -ag mirror --set-cursor 'sudo reflector --country Vietnam,Singapore,Japan --latest 6 --sort rate --save /etc/pacman.d/mirrorlist%'
+# abbr -ag mirror --set-cursor 'sudo reflector --country Vietnam,Singapore,Japan --latest 6 --sort rate --save /etc/pacman.d/mirrorlist%'
+abbr -ag mr --set-cursor 'sudo rate-mirrors --allow-root --max-mirrors-to-output 10 --save /etc/pacman.d/mirrorlist arch%'
 
 # Download yt as audio
 abbr -ag dlm 'yt-dlp --extract-audio --audio-format best --audio-quality 0 --ignore-errors -o "%(title)s.%(ext)s"'
@@ -78,7 +80,7 @@ abbr -ag vpn --set-cursor 'mullvad status%'
 abbr -ag fip 'fish -P'
 
 # Open custom tmux
-abbr -ag tm --set-cursor 'tmux a -t linh%'
+abbr -ag tm --set-cursor 'tmux a -t %'
 
 # Open Dolphin in current dir
 abbr -ag dol --set-cursor 'dolphin --select . &%'

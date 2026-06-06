@@ -91,10 +91,10 @@ window-rule {
     open-fullscreen true
 }
 
-// window-rule {
-//     match app-id="^steam_app_(.*)" title="(.*)(SB-Win64-Shipping.exe)"
-//     open-fullscreen false
-// }
+window-rule {
+    match app-id="steam" title="Steam"
+    open-maximized true
+}
 
 window-rule {
     match app-id="steam" title="Sign in (.*)"
