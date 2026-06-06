@@ -339,9 +339,9 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     Mod+Space repeat=false { spawn "walker"; }
-    Mod+A     repeat=false { spawn-sh "pkill wiremix || foot wiremix"; }
-    Mod+B     repeat=false { spawn-sh "pkill bluetui || foot bluetui"; }
-    Mod+W     repeat=false { spawn-sh "pkill impala || foot impala"; }
+    Mod+A     repeat=false { spawn-sh "pkill wiremix || footclient wiremix"; }
+    Mod+B     repeat=false { spawn-sh "pkill bluetui || footclient bluetui"; }
+    Mod+W     repeat=false { spawn-sh "pkill impala || footclient impala"; }
 
     XF86AudioRaiseVolume allow-when-locked=true {
         spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.02+"
@@ -490,13 +490,12 @@ binds {
 
     Mod+Shift+P { power-off-monitors; }
 
-    Mod+T         { spawn "foot"; }
+    Mod+T         { spawn "footclient"; }
     Mod+E         { spawn "dolphin"; }
     Mod+Alt+L     { spawn "hyprlock"; }
     Mod+Ctrl+P    { spawn-sh "hyprpicker -a -n"; } // Pick color
     Mod+Backslash { spawn-sh "pkill sunsetr || sunsetr"; } // Nightlight
-    Mod+Ctrl+N    { spawn-sh "foot nvim ~/Desktop/notes/"; } // Quick note
-
+    Mod+Ctrl+N    { spawn-sh "footclient nvim ~/Desktop/notes/"; } // Quick note
     Mod+Page_Up   { spawn-sh "obs"; }
     Mod+Page_Down { spawn-sh "obs-cmd recording toggle"; }
 }
