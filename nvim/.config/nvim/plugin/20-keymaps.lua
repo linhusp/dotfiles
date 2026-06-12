@@ -121,27 +121,3 @@ G.map('i', '<CR>', function()
     -- Fallback
     return vim.api.nvim_replace_termcodes('<CR>', true, true, true)
 end, { expr = true, replace_keycodes = true })
-
--- Attempt to add/remove strikethrough in markdown files
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = 'markdown',
-    callback = function()
-        G.map(
-            { 'v', 'x' },
-            '<leader>ms',
-            [[:s/^/\~\~/<CR>gv:s/$/\~\~/<CR>:noh<CR>]],
-            'Add strikethrough to a block in markdown'
-        )
-    end,
-})
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = 'markdown',
-    callback = function()
-        G.map(
-            { 'v', 'x' },
-            '<leader>mS',
-            [[:s/^\~\~\(.*\)\~\~$/\1/<CR>:noh<CR>]],
-            'Remove strikethrough from a block in markdown'
-        )
-    end,
-})
