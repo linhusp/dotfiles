@@ -68,27 +68,28 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     end,
 })
 
--- CWD when nvim a dir/file from the terminal
-vim.api.nvim_create_autocmd('VimEnter', {
-    group = vim.api.nvim_create_augroup('CwdVimEnter', { clear = true }),
+-- Auto cwd when nvim open a path the first time, if possible
+vim.api.nvim_create_autocmd('BufEnter', {
+    group = vim.api.nvim_create_augroup('CwdStartup', { clear = true }),
+    once = true,
     callback = function()
-        local target = vim.fn.argv()[1]
-
-        if type(target) ~= 'string' then
+        local target = vim.api.nvim_buf_get_name(0)
+        if target == '' then
             return
         end
 
-        if vim.fn.isdirectory(target) ~= 1 then
-            -- vim.fn.input(vim.inspect(target))
-            local parent = vim.fs.dirname(target)
-
-            if vim.fn.isdirectory(parent) ~= 1 then
-                return
-            end
-
-            target = parent
+        -- Check for oil:// path and turn it into standard path
+        if target:match('^oil://') then
+            target = target:gsub('^oil://', '')
         end
 
-        vim.fn.chdir(target)
+        -- Drop to parent directory if the target is a file
+        if vim.fn.isdirectory(target) ~= 1 then
+            target = vim.fs.dirname(target)
+        end
+
+        if vim.fn.isdirectory(target) == 1 then
+            vim.fn.chdir(target)
+        end
     end,
 })
