@@ -32,8 +32,25 @@ G.map('i', '<A-e>', '<C-\\><C-n>A')
 -- Jump to previous bracket (stupidly)
 G.map('i', '<A-i>', [[<C-\><C-n> :call search('[{[(]', 'bes')<CR>a]])
 
--- Select the entire buffer
-G.map('', '<leader>a', '<C-\\><C-n>ggVG<CR>')
+-- Select the entire buffer, then jump back to previous position
+G.map('n', '<leader>a', function()
+    local pre_pos = vim.api.nvim_win_get_cursor(0)
+    vim.api.nvim_create_autocmd('ModeChanged', {
+        pattern = '[vV\x16]*:*',
+        once = true,
+        callback = function()
+            -- Only restore position if return to normal mode
+            if
+                vim.api.nvim_get_mode().mode == 'n'
+                and vim.api.nvim_win_is_valid(0)
+            then
+                vim.api.nvim_win_set_cursor(0, pre_pos)
+                vim.cmd('norm! zz') -- Also center the layout
+            end
+        end,
+    })
+    vim.cmd('norm! ggVG')
+end, { desc = 'Select the entire buffer' })
 
 -- Split line by coma, the reverse of J, with auto-indent (stupidly)
 G.map(
