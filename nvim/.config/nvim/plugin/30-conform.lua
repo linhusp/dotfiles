@@ -1,4 +1,4 @@
-vim.pack.add({ G.gh('stevearc/conform.nvim') })
+vim.pack.add({ G.gh .. 'stevearc/conform.nvim' })
 
 -- Lazy conform
 require('conform').setup({

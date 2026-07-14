@@ -19,10 +19,6 @@ G.map = function(modes, lhs, rhs, desc_and_opts)
     vim.keymap.set(modes, lhs, rhs, opts)
 end
 
-G.gh = function(x)
-    return 'https://github.com/' .. x
-end
-
 G.lazy = function(pack_name, mod_name, opts)
     if not package.loaded[mod_name] then
         vim.cmd.packadd(pack_name)
@@ -30,18 +26,17 @@ G.lazy = function(pack_name, mod_name, opts)
     end
 end
 
--- Builtin plugins
+G.gh = 'https://github.com/'
 vim.cmd.packadd('nvim.undotree')
 
 -- Prosession
 vim.g.prosession_dir = vim.fn.stdpath('cache') .. '/sessions'
 vim.g.prosession_on_startup = 0
-vim.pack.add({ G.gh('tpope/vim-obsession') })
-vim.pack.add({ G.gh('dhruvasagar/vim-prosession') }, { load = function() end })
-
-G.map('n', '<leader>sp', function()
-    vim.cmd.packadd('vim-prosession')
-end, 'Enable Prosession')
+vim.pack.add({ G.gh .. 'tpope/vim-obsession' })
+vim.pack.add({
+    G.gh .. 'dhruvasagar/vim-prosession',
+    G.gh .. 'catgoose/nvim-colorizer.lua',
+}, { load = function() end })
 
 G.map('n', '<leader>ss', function()
     if vim.fn.exists(':Prosession') == 0 then
@@ -62,11 +57,11 @@ end, 'Cmd ColorizerToggle')
 
 -- Minimal plugins
 vim.pack.add({
-    G.gh('arborist-ts/arborist.nvim'),
-    G.gh('j-hui/fidget.nvim'),
-    G.gh('nvimdev/indentmini.nvim'),
-    G.gh('stevearc/oil.nvim'),
-    G.gh('shortcuts/no-neck-pain.nvim'),
+    G.gh .. 'arborist-ts/arborist.nvim',
+    G.gh .. 'j-hui/fidget.nvim',
+    G.gh .. 'nvimdev/indentmini.nvim',
+    G.gh .. 'stevearc/oil.nvim',
+    G.gh .. 'shortcuts/no-neck-pain.nvim',
 })
 
 require('arborist').setup({
@@ -90,8 +85,8 @@ G.map('n', '<leader><Tab>', ':NoNeckPain<CR>', 'Cmd NoNeckPain')
 
 -- LSP stuff
 vim.pack.add({
-    G.gh('neovim/nvim-lspconfig'),
-    G.gh('mason-org/mason.nvim'),
+    G.gh .. 'neovim/nvim-lspconfig',
+    G.gh .. 'mason-org/mason.nvim',
 })
 
 require('mason').setup()

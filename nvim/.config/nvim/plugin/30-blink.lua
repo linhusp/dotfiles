@@ -1,7 +1,7 @@
 vim.pack.add({
-    G.gh('rafamadriz/friendly-snippets'),
-    G.gh('saghen/blink.lib'),
-    G.gh('saghen/blink.cmp'),
+    G.gh .. 'rafamadriz/friendly-snippets',
+    G.gh .. 'saghen/blink.lib',
+    G.gh .. 'saghen/blink.cmp',
 })
 
 local completion = {

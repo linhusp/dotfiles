@@ -1,15 +1,15 @@
 vim.pack.add({
-    G.gh('nvim-mini/mini.pick'),
-    G.gh('nvim-mini/mini.comment'),
+    G.gh .. 'nvim-mini/mini.pick',
+    G.gh .. 'nvim-mini/mini.comment',
 
     -- * va)at - select both around `)` and around the next tag
     -- * yinq - yank inside the next quote
     -- * g[f - go to the nearest function quote
     -- * cila - change the inner of last argument
-    G.gh('nvim-mini/mini.ai'),
+    G.gh .. 'nvim-mini/mini.ai',
 
     -- * gS - to toggle
-    G.gh('nvim-mini/mini.splitjoin'),
+    G.gh .. 'nvim-mini/mini.splitjoin',
 })
 
 local pick = require('mini.pick')
