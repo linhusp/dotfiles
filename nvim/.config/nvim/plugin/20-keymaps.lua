@@ -102,21 +102,17 @@ G.map(all_modes, '<A-l>', '<C-\\><C-n><C-w>l')
 G.map('n', 'zs', '<Cmd>Inspect<CR>')
 G.map('n', 'zt', '<Cmd>InspectTree<CR>')
 
--- Stupidly Smart-Enter inside a bracket
--- G.map('i', '<A-o>', [[<CR><C-\><C-n>O]], opts)
+-- Caching these at startup to parse string one time only
+local stupid_cr = vim.api.nvim_replace_termcodes('<CR>', true, true, true)
+local smart_cr = vim.api.nvim_replace_termcodes('<CR><C-o>O', true, true, true)
+local pairs = { ['{'] = '}', ['['] = ']', ['('] = ')' }
 
 -- Better Smart-Enter
 G.map('i', '<CR>', function()
-    local col = vim.fn.col('.')
+    local col = vim.api.nvim_win_get_cursor(0)[2] + 1
     local line = vim.api.nvim_get_current_line()
     local before = line:sub(col - 1, col - 1)
     local after = line:sub(col, col)
-    local pairs = { ['{'] = '}', ['['] = ']', ['('] = ')' }
-
-    if pairs[before] == after then
-        return vim.api.nvim_replace_termcodes('<CR><C-o>O', true, true, true)
-    end
-
-    -- Fallback
-    return vim.api.nvim_replace_termcodes('<CR>', true, true, true)
-end, { expr = true, replace_keycodes = true })
+    if pairs[before] == after then return smart_cr end
+    return stupid_cr -- Fallback
+end, { expr = true, replace_keycodes = true, desc = 'Smart-Enter' })
