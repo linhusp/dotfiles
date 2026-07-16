@@ -26,6 +26,7 @@ local win_center = function()
 end
 
 pick.setup({
+    source = { show = pick.default_show }, -- Disable icons
     window = { config = win_center },
 })
 
