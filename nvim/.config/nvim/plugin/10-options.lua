@@ -55,6 +55,7 @@ vim.o.mousemodel = 'extend'
 
 -- Disable the annoying auto-commenting on new line
 vim.api.nvim_create_autocmd('FileType', {
+    group = G.ag,
     pattern = '*',
     command = 'setlocal formatoptions-=ro',
 })
@@ -64,12 +65,14 @@ vim.filetype.add({ extension = { ini = 'conf' } })
 
 -- Terminal
 vim.api.nvim_create_autocmd('TermOpen', {
+    group = G.ag,
     pattern = '*',
     command = 'setlocal nonumber norelativenumber signcolumn=no',
 })
 
 -- Highlight yanked text
 vim.api.nvim_create_autocmd('TextYankPost', {
+    group = G.ag,
     callback = function()
         vim.hl.on_yank()
     end,
@@ -77,7 +80,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 -- Auto cwd when nvim open a path the first time, if possible
 vim.api.nvim_create_autocmd('BufEnter', {
-    group = vim.api.nvim_create_augroup('CwdStartup', { clear = true }),
+    group = G.ag,
     once = true,
     callback = function()
         local target = vim.api.nvim_buf_get_name(0)

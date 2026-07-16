@@ -24,6 +24,7 @@ G.lazy = function(pack_name, mod_name, opts)
 end
 
 G.gh = 'https://github.com/'
+G.ag = vim.api.nvim_create_augroup('NvimOptions', { clear = true })
 
 -- --- Builtin modules -----------------------------------------------
 vim.cmd.packadd('nvim.undotree')
