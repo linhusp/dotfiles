@@ -16,23 +16,18 @@ local pick = require('mini.pick')
 pick.setup()
 
 -- Custom the default files picker:
--- * replacing `rg` for `find` for better syntax and matching
+-- * replacing `rg` for `fd` for better syntax and matching
 -- * be able to both picking hidden files and ingoring `.git/`
 -- * to resolve symlinks to files
 -- * to sort results
 pick.registry.files = function()
-    -- local items = vim.fn.systemlist('fd -t f -H -E .git | sort')
-    -- pick.start({ source = { items = items, name = 'Files (Sorted)' } })
-
-    local cmd = [[
-        find . -name .git -prune \
-            -o \( -type f -o -type l -xtype f \) \
-            -printf "%P\n" \
-        | sort
-    ]]
-
+    local cmd = 'fd -t f -t l -H -E .git -E .var'
+    if vim.fn.getcwd() == vim.fn.expand('~') then
+        cmd = cmd .. ' --max-depth 1'
+    end
+    cmd = cmd .. '| sort'
     pick.start({
-        source = { items = vim.fn.systemlist(cmd), name = 'Files (Custom)' },
+        source = { items = vim.fn.systemlist(cmd), name = 'Files (fd)' },
     })
 end
 
