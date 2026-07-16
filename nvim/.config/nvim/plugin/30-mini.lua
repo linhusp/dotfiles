@@ -13,7 +13,21 @@ vim.pack.add({
 })
 
 local pick = require('mini.pick')
-pick.setup()
+local win_center = function()
+    local height = math.floor(0.618 * vim.o.lines)
+    local width = math.floor(0.618 * vim.o.columns)
+    return {
+        anchor = 'NW',
+        height = height,
+        width = width,
+        row = math.floor(0.5 * (vim.o.lines - height)),
+        col = math.floor(0.5 * (vim.o.columns - width)),
+    }
+end
+
+pick.setup({
+    window = { config = win_center },
+})
 
 -- Custom the default files picker:
 -- * replacing `rg` for `fd` for better syntax and matching
