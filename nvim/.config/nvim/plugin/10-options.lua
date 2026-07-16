@@ -15,7 +15,8 @@ vim.o.winborder = 'single'
 -- vim.o.pumheight = 10 -- Make popup menu smaller
 -- vim.o.pummaxwidth = 100 -- Make popup menu not too wide
 vim.o.laststatus = 2 -- Always show status
-vim.opt.shortmess:append('ac')
+vim.o.shortmess = vim.o.shortmess .. 'acI' -- Less words, no intro
+vim.o.mousemodel = 'extend' -- Mouse, but why?
 
 -- Text indicators
 vim.o.list = true
@@ -52,14 +53,19 @@ vim.o.mousemodel = 'extend'
 -- vim.hl.priorities.semantic_tokens = 95
 
 -- Disable the annoying auto-commenting on new line
-vim.cmd('autocmd BufEnter * set formatoptions-=ro')
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = '*',
+    command = 'setlocal formatoptions-=ro',
+})
 
--- Filetype autocmds
-vim.cmd('autocmd BufNewFile,BufRead *.ini set ft=conf')
-vim.cmd([[autocmd BufnewFile,BufRead *.conf set commentstring=#\ %s]])
+-- Filetype detection
+vim.filetype.add({ extension = { ini = 'conf' } })
 
 -- Terminal
-vim.cmd('autocmd TermOpen * setlocal nonumber norelativenumber signcolumn=no')
+vim.api.nvim_create_autocmd('TermOpen', {
+    pattern = '*',
+    command = 'setlocal nonumber norelativenumber signcolumn=no',
+})
 
 -- Highlight yanked text
 vim.api.nvim_create_autocmd('TextYankPost', {
