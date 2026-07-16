@@ -6,14 +6,11 @@ vim.cmd('filetype plugin indent on')
 
 _G.G = {} -- Global table to reuse things
 
--- Helper functions
 G.map = function(modes, lhs, rhs, desc_and_opts)
     local opts = { silent = true }
     if type(desc_and_opts) == 'string' then
-        -- If string, pass it as desc
         opts.desc = desc_and_opts
     elseif type(desc_and_opts) == 'table' then
-        -- If table, merge it with default opts
         opts = vim.tbl_extend('force', opts, desc_and_opts)
     end
     vim.keymap.set(modes, lhs, rhs, opts)
@@ -27,9 +24,11 @@ G.lazy = function(pack_name, mod_name, opts)
 end
 
 G.gh = 'https://github.com/'
+
+-- --- Builtin modules -----------------------------------------------
 vim.cmd.packadd('nvim.undotree')
 
--- Prosession
+-- --- Minimal lazied plugins ----------------------------------------
 vim.g.prosession_dir = vim.fn.stdpath('cache') .. '/sessions'
 vim.g.prosession_on_startup = 0
 vim.pack.add({ G.gh .. 'tpope/vim-obsession' })
@@ -38,24 +37,19 @@ vim.pack.add({
     G.gh .. 'catgoose/nvim-colorizer.lua',
 }, { load = function() end })
 
-G.map('n', '<leader>ss', function()
+G.map('n', '<leader>s', function()
     if vim.fn.exists(':Prosession') == 0 then
         vim.cmd.packadd('vim-prosession')
     end
     vim.cmd('Prosession')
-end, 'Cmd Prosession')
-
--- Minimal lazy plugins
-vim.pack.add({
-    G.gh('catgoose/nvim-colorizer.lua'),
-}, { load = function() end })
+end, { desc = 'Cmd Prosession' })
 
 G.map('n', '<leader>cl', function()
     G.lazy('nvim-colorizer.lua', 'colorizer', {})
     vim.cmd('ColorizerToggle')
-end, 'Cmd ColorizerToggle')
+end, { desc = 'Cmd ColorizerToggle' })
 
--- Minimal plugins
+-- --- Minimal plugins -----------------------------------------------
 vim.pack.add({
     G.gh .. 'arborist-ts/arborist.nvim',
     G.gh .. 'j-hui/fidget.nvim',
@@ -83,7 +77,7 @@ require('no-neck-pain').setup({
 G.map('n', '<leader>e', ':Oil<CR>', 'Open parent directory')
 G.map('n', '<leader><Tab>', ':NoNeckPain<CR>', 'Cmd NoNeckPain')
 
--- LSP stuff
+-- --- LSP stuff -----------------------------------------------------
 vim.pack.add({
     G.gh .. 'neovim/nvim-lspconfig',
     G.gh .. 'mason-org/mason.nvim',
@@ -100,8 +94,7 @@ G.map('n', '<leader>vl', function()
     vim.diagnostic.config({
         virtual_lines = not vim.diagnostic.config().virtual_lines,
     })
-end, 'Toggle diagnostic virtual lines')
-
+end, { desc = 'Toggle diagnostic virtual lines' })
 G.map('n', '<leader>lf', vim.lsp.buf.format, 'LSP format buffer')
 G.map('n', '<leader>d', vim.diagnostic.open_float, 'Show diagnostics')
 
