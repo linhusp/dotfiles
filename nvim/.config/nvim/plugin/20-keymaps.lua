@@ -5,7 +5,6 @@ local all_modes = { 'n', 'v', 'i', 't' }
 G.map('n', '<leader>ls', ':update<CR>:so<CR>')
 G.map('n', '<leader>w', ':w<CR>')
 G.map('n', '<leader>r', ':restart<CR>')
--- G.map('n', '<leader>e', ':Explore<CR>')
 G.map('n', '<leader>u', ':Undotree<CR>')
 G.map('n', '<leader>o', '<C-^>')
 G.map('n', '<leader>t', ':tabnew<CR>')
