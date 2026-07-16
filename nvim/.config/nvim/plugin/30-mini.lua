@@ -36,9 +36,9 @@ pick.registry.files = function()
     })
 end
 
-G.map('n', '<leader>f', ':Pick files<CR>', 'Pick files')
-G.map('n', '<leader>b', ':Pick buffers<CR>', 'Pick buffers')
-G.map('n', '<leader>gs', ':Pick grep_live<CR>', 'Pick grep')
+G.map('n', '<leader>f', '<Cmd>Pick files<CR>', 'Pick files')
+G.map('n', '<leader>b', '<Cmd>Pick buffers<CR>', 'Pick buffers')
+G.map('n', '<leader>gs', '<Cmd>Pick grep_live<CR>', 'Pick grep')
 
 require('mini.comment').setup({ options = { ignore_blank_line = true } })
 require('mini.ai').setup()

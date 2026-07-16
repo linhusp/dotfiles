@@ -75,8 +75,8 @@ require('no-neck-pain').setup({
     colors = { blend = -0.1 },
 })
 
-G.map('n', '<leader>e', ':Oil<CR>', 'Open parent directory')
-G.map('n', '<leader><Tab>', ':NoNeckPain<CR>', 'Cmd NoNeckPain')
+G.map('n', '<leader>e', '<Cmd>Oil<CR>')
+G.map('n', '<leader><Tab>', '<Cmd>NoNeckPain<CR>')
 
 -- --- LSP stuff -----------------------------------------------------
 vim.pack.add({
