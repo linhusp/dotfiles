@@ -84,11 +84,7 @@ vim.pack.add({
 })
 
 require('mason').setup()
-
--- Ensure installed
--- 'lua_ls', 'stylua', 'pyrefly', 'ruff', 'bashls', 'shellcheck',
--- 'shellharden', 'shfmt', 'biome', 'prettier', 'tombi',
-vim.lsp.enable({ 'lua_ls', 'pyrefly', 'bashls', 'qmlls' })
+vim.lsp.enable({ 'lua_ls', 'pyrefly', 'bashls', 'qmlls', 'gopls' })
 
 G.map('n', '<leader>vl', function()
     vim.diagnostic.config({

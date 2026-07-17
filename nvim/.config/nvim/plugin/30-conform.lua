@@ -12,6 +12,7 @@ require('conform').setup({
         markdown = { 'prettier' },
         toml = { 'tombi' },
         css = { 'prettier' },
+        go = { 'golines' },
     },
     formatters = {
         stylua = { append_args = { '--column-width', '80' } },
@@ -32,6 +33,7 @@ require('conform').setup({
             },
         },
         biome = { append_args = { '--format-with-errors', 'true' } },
+        golines = { args = { '-m', '80' } },
     },
 })
 

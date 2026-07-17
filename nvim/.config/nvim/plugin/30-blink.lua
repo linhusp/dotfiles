@@ -55,9 +55,9 @@ local sources = {
             )
         then
             return { 'buffer' }
-        else
-            return { 'lsp', 'path', 'snippets', 'buffer' }
         end
+        if vim.bo.filetype == 'go' then return { 'lsp', 'path', 'buffer' } end
+        return { 'lsp', 'path', 'snippets', 'buffer' }
     end,
 
     -- Hide snippets after trigger characters
