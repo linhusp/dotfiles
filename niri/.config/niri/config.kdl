@@ -497,6 +497,7 @@ binds {
     Mod+Ctrl+P    { spawn-sh "hyprpicker -a -n"; } // Pick color
     Mod+Backslash { spawn-sh "pkill sunsetr || sunsetr"; } // Nightlight toggle
     Mod+Ctrl+N    { spawn-sh "footclient nvim ~/Desktop/notes/daily-note.md"; } // Quick note
+    Mod+Ctrl+T    { spawn-sh "footclient nvim ~/Desktop/notes/todo.md"; } // Quick todo
     Mod+Page_Up   { spawn-sh "obs"; }
     Mod+Page_Down { spawn-sh "obs-cmd recording toggle"; }
 }
