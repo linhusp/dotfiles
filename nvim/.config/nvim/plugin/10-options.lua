@@ -79,28 +79,23 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     end,
 })
 
--- Auto cwd when nvim open a path the first time, if possible
+-- Auto set cwd when nvim open the first time, if possible
 vim.api.nvim_create_autocmd('BufEnter', {
     group = G.ag,
     once = true,
     callback = function()
         local target = vim.api.nvim_buf_get_name(0)
-        if target == '' then
-            return
+        if target == '' then return end
+
+        -- Check for 'oil://' prefix and turn it into standard path
+        if target:sub(1, 6) == 'oil://' then target = target:sub(7) end
+
+        local is_dir = function(path)
+            local stat = vim.uv.fs_stat(path)
+            return stat and stat.type == 'directory'
         end
 
-        -- Check for oil:// path and turn it into standard path
-        if target:match('^oil://') then
-            target = target:gsub('^oil://', '')
-        end
-
-        -- Drop to parent directory if the target is a file
-        if vim.fn.isdirectory(target) ~= 1 then
-            target = vim.fs.dirname(target)
-        end
-
-        if vim.fn.isdirectory(target) == 1 then
-            vim.fn.chdir(target)
-        end
+        if not is_dir(target) then target = vim.fs.dirname(target) end
+        if is_dir(target) then vim.api.nvim_set_current_dir(target) end
     end,
 })
