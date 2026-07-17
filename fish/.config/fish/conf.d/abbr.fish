@@ -35,8 +35,6 @@ abbr -ag t2 'tree -C -L 2'
 abbr -ag ta 'tree -C -a'
 abbr -ag tng 'tree -C -a -I .git/'
 abbr -ag pcache --set-cursor 'paru -Scad%'
-# abbr -ag paru 'yay'
-# abbr -ag yy 'yay'
 abbr -ag ss 'paru -Ss'
 abbr -ag pa 'sudo pacman'
 abbr -ag sy --set-cursor 'sudo pacman -Syu%'
@@ -49,18 +47,14 @@ abbr -ag disk 'ncdu'
 
 # Config shortcuts
 abbr -ag cf --set-cursor 'cd ~/.config%'
-# abbr -ag cfv --set-cursor 'nvim -c "cd ~/.config/nvim" ~/.config/nvim%'
 abbr -ag cfv --set-cursor 'nvim ~/.config/nvim%'
 abbr -ag cff --set-cursor 'nvim ~/.config/fish%'
 abbr -ag cfff --set-cursor 'sudo -Es nvim /etc/fish%'
 abbr -ag cft --set-cursor 'nvim ~/.config/tmux/tmux.conf%'
 abbr -ag cfn --set-cursor 'nvim ~/.config/niri/config.kdl%'
 abbr -ag nr --set-cursor 'niri-session%'
-# abbr -ag wcp --set-cursor 'wl-copy %'
-# abbr -ag wp --set-cursor 'wl-paste > %'
 
 # Get the best rated mirrors
-# abbr -ag mirror --set-cursor 'sudo reflector --country Vietnam,Singapore,Japan --latest 6 --sort rate --save /etc/pacman.d/mirrorlist%'
 abbr -ag mr --set-cursor 'sudo rate-mirrors --allow-root --max-mirrors-to-output 10 --save /etc/pacman.d/mirrorlist arch%'
 
 # Download yt as audio
@@ -70,7 +64,6 @@ abbr -ag dlm 'yt-dlp --extract-audio --audio-format best --audio-quality 0 --ign
 abbr -ag won --set-cursor 'warp-cli connect%'
 abbr -ag woff --set-cursor 'warp-cli disconnect%'
 abbr -ag warp --set-cursor 'warp-cli status%'
-# abbr -ag warpc --set-cursor 'curl https://www.cloudflare.com/cdn-cgi/trace/ 2>/dev/null | grep warp%'
 abbr -ag von --set-cursor 'mullvad connect%'
 abbr -ag voff --set-cursor 'mullvad disconnect%'
 # abbr -ag vpn --set-cursor 'sudo systemctl start wg-quick@protonvpn.service%'

@@ -12,16 +12,13 @@ export XDG_DATA_DIRS="$HOME/.local/share/flatpak/exports/share:/var/lib/flatpak/
 # This ensures TTYs and SSH sessions match the graphical session.
 # --------------------------------------------------------------------
 # Loop through user environment configs
-if [ -d "$HOME/.config/environment.d" ]
-then
+if [ -d "$HOME/.config/environment.d" ]; then
     # Automatically exports any variables defined in the sourced files
     set -a
 
     # Source every .conf file
-    for file in "$HOME/.config/environment.d"/*.conf
-    do
-        if [ -f "$file" ]
-            then
+    for file in "$HOME/.config/environment.d"/*.conf; do
+        if [ -f "$file" ]; then
             . "$file"
         fi
     done
@@ -31,8 +28,7 @@ then
 fi
 # --------------------------------------------------------------------
 
-if [ "$XDG_SESSION_TYPE" = "wayland" ]
-then
+if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
     # Wayland backends
     export QT_QPA_PLATFORM=wayland
     export EGL_PLATFORM=wayland
