@@ -138,18 +138,18 @@ layout {
     // With this the workspace will use the overview's background as its own
     // NOTE: Should use along side wallpaper layer-rule.
     //
-    background-color "transparent"
+    // background-color "transparent"
 }
 
 overview {
-    backdrop-color "#131313"
-    workspace-shadow {
-        on
-        softness 10
-        spread 5
-        offset x=0 y=0
-        color "#0009"
-    }
+    backdrop-color "#272727"
+    // workspace-shadow {
+    //     on
+    //     softness 10
+    //     spread 5
+    //     offset x=0 y=0
+    //     color "#0009"
+    // }
     zoom 0.25
 }
 
@@ -267,17 +267,17 @@ hotkey-overlay {
 // Put swaybg "wallpaper" into the bottom layer so it can act like a wallpaper
 // for the overview.
 // NOTE: Should use along side `background-color "transparent"` in layout.
-layer-rule {
-    match namespace="wallpaper"
-    place-within-backdrop true
-    background-effect { blur true; }
-}
+// layer-rule {
+//     match namespace="wallpaper"
+//     place-within-backdrop true
+//     background-effect { blur true; }
+// }
 
 // Enable blur on app launchers
-layer-rule {
-    match namespace="overlay"
-    background-effect { blur true; }
-}
+// layer-rule {
+//     match namespace="overlay"
+//     background-effect { blur true; }
+// }
 
 // Disable xray blur on top and  overlay layers
 layer-rule {
@@ -494,8 +494,8 @@ binds {
     Mod+E         { spawn "dolphin"; }
     Mod+Alt+L     { spawn "hyprlock"; }
     Mod+Ctrl+P    { spawn-sh "hyprpicker -a -n"; } // Pick color
-    Mod+Backslash { spawn-sh "pkill sunsetr || sunsetr"; } // Nightlight
-    Mod+Ctrl+N    { spawn-sh "footclient nvim ~/Desktop/notes/"; } // Quick note
+    Mod+Backslash { spawn-sh "pkill sunsetr || sunsetr"; } // Nightlight toggle
+    Mod+Ctrl+N    { spawn-sh "footclient nvim ~/Desktop/notes/daily-note.md"; } // Quick note
     Mod+Page_Up   { spawn-sh "obs"; }
     Mod+Page_Down { spawn-sh "obs-cmd recording toggle"; }
 }
