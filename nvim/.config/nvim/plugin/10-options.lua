@@ -7,7 +7,8 @@ vim.o.relativenumber = true
 vim.o.signcolumn = 'yes'
 vim.o.cursorline = true -- Enable current line highlighting
 vim.o.cursorlineopt = 'number' -- Highlight the current line number
-vim.o.guicursor = '' -- Let the terminal renders the cursor
+vim.o.guicursor = vim.o.guicursor
+    .. ',n-v-c:block-blinkon0,i:block-blinkwait175-blinkon175-blinkoff150'
 vim.o.scrolloff = 6
 vim.o.pumborder = 'single'
 vim.o.winborder = 'single'
