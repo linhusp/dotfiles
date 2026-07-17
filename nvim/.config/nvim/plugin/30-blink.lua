@@ -18,7 +18,21 @@ local completion = {
                 { 'kind' },
                 { 'source_name' },
             },
-            components = { source_name = { width = { max = 4 } } },
+            components = {
+                source_name = {
+                    -- Reduce length of source_name
+                    text = function(ctx)
+                        local alias = {
+                            LSP = 'LSP',
+                            Path = 'Path',
+                            Snippets = 'Snip',
+                            Buffer = 'Buf',
+                            Cmdline = 'Cmd',
+                        }
+                        return alias[ctx.source_name]
+                    end,
+                },
+            },
         },
     },
 }
