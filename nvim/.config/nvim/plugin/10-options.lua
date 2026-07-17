@@ -35,7 +35,7 @@ vim.o.shiftwidth = 4 -- Use 4 spaces to indent
 vim.o.wrap = true
 vim.o.linebreak = true -- Wrap lines
 vim.o.breakindent = true -- Indent wrapped line
-vim.o.textwidth = 80
+
 -- vim.cmd('set formatoptions+=tcnl1qj')
 
 -- Searching and Substitution
