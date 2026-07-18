@@ -15,7 +15,14 @@ require('conform').setup({
         go = { 'golines' },
     },
     formatters = {
-        stylua = { append_args = { '--column-width', '80' } },
+        stylua = {
+            append_args = {
+                '--column-width',
+                '80',
+                '--collapse-simple-statement',
+                'ConditionalOnly',
+            },
+        },
         ruff_format = {
             append_args = {
                 '--config',

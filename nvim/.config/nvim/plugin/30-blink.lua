@@ -37,8 +37,7 @@ local completion = {
     },
 }
 
--- Enable signature help but don't show it automatically
-local signature = { enabled = true, trigger = { enabled = false } }
+local signature = { enabled = true, trigger = { show_on_insert = true } }
 
 local sources = {
     min_keyword_length = 2,
@@ -74,6 +73,7 @@ local keymap = {
     ['<A-f>'] = { 'select_and_accept', 'fallback' },
     ['<C-u>'] = { 'scroll_signature_up', 'fallback' },
     ['<C-d>'] = { 'scroll_signature_down', 'fallback' },
+    ['<C-b>'] = { 'scroll_documentation_up' }, -- Disable fallback
 }
 
 local cmdline = {
