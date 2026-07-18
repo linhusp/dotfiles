@@ -73,6 +73,7 @@ local keymap = {
     ['<A-f>'] = { 'select_and_accept', 'fallback' },
     ['<C-u>'] = { 'scroll_signature_up', 'fallback' },
     ['<C-d>'] = { 'scroll_signature_down', 'fallback' },
+    ['<C-b>'] = { 'scroll_documentation_up' }, -- Disable fallback
 }
 
 local cmdline = {
