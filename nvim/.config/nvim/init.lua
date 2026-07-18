@@ -101,7 +101,11 @@ require('arborist').setup({
 })
 
 require('fidget').setup({ progress = { suppress_on_insert = true } })
-require('indentmini').setup({ exclude = { 'markdown' }, minlevel = 2 })
+require('indentmini').setup({
+    char = '|',
+    exclude = { 'markdown' },
+    minlevel = 2,
+})
 require('oil').setup({ default_file_explorer = true, delete_to_trash = true })
 require('no-neck-pain').setup({
     width = 85,
