@@ -37,8 +37,7 @@ local completion = {
     },
 }
 
--- Enable signature help but don't show it automatically
-local signature = { enabled = true, trigger = { enabled = false } }
+local signature = { enabled = true, trigger = { show_on_insert = true } }
 
 local sources = {
     min_keyword_length = 2,
