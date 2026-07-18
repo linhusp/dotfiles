@@ -19,7 +19,7 @@ vim.o.mousemodel = 'extend' -- Mouse, but why?
 
 -- Text indicators and editing
 vim.o.list = true
-vim.o.listchars = 'tab:|.,trail:~,extends:>,precedes:<,nbsp:%'
+vim.o.listchars = 'tab:· ,trail:~,extends:>,precedes:<,nbsp:%'
 vim.o.fillchars = 'eob: '
 vim.o.smartindent = true
 vim.o.expandtab = true -- Turn tabs to spaces
