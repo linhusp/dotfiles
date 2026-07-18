@@ -97,9 +97,8 @@ vim.pack.add({
 require('arborist').setup({
     update_cadence = 'manual',
     disable = { indent = { 'xml' } },
-    ignore = { 'ini', 'conf', 'no-neck-pain' },
+    ignore = { 'ini', 'conf', 'no-neck-pain', 'PKGBUILD' },
 })
-
 require('fidget').setup({ progress = { suppress_on_insert = true } })
 require('indentmini').setup({
     char = '|',
