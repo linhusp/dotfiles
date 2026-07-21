@@ -88,10 +88,10 @@ end, { desc = 'Cmd ColorizerToggle' })
 -- Minimal plugins ---------------------------------------------------
 vim.pack.add({
     G.gh .. 'arborist-ts/arborist.nvim',
-    G.gh .. 'j-hui/fidget.nvim',
     G.gh .. 'nvimdev/indentmini.nvim',
     G.gh .. 'stevearc/oil.nvim',
     G.gh .. 'shortcuts/no-neck-pain.nvim',
+    G.gh .. 'josstei/whisk.nvim',
 })
 
 require('arborist').setup({
@@ -99,7 +99,6 @@ require('arborist').setup({
     disable = { indent = { 'xml' } },
     ignore = { 'ini', 'conf', 'no-neck-pain', 'PKGBUILD' },
 })
-require('fidget').setup({ progress = { suppress_on_insert = true } })
 require('indentmini').setup({
     char = '|',
     exclude = { 'markdown' },
@@ -111,6 +110,7 @@ require('no-neck-pain').setup({
     buffers = { right = { enabled = false } },
     colors = { blend = -0.1 },
 })
+require('whisk').setup()
 
 G.map('n', '<leader>e', '<Cmd>Oil<CR>')
 G.map('n', '<leader><Tab>', '<Cmd>NoNeckPain<CR>')
