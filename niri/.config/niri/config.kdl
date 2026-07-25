@@ -23,7 +23,7 @@ environment {
 // `regular` instead of `both` to solve the weird unselecting text.
 // https://github.com/hyprwm/Hyprland/issues/2619#issuecomment-1620896059
 spawn-sh-at-startup "wl-clip-persist --clipboard regular"
-spawn-sh-at-startup "swaybg -i ~/Pictures/Desktop/white_flowers.png"
+spawn-sh-at-startup "swaybg -m fill -i ~/Pictures/Desktop/white_flowers.png"
 
 spawn-at-startup "/usr/lib/polkit-kde-authentication-agent-1"
 spawn-at-startup "/usr/lib/pam_kwallet_init"
