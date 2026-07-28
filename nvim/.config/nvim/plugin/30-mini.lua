@@ -36,9 +36,9 @@ pick.setup({
 -- * to resolve symlinks to files
 -- * to sort results
 pick.registry.files = function()
-    local cmd = 'fd -t f -t l -H -E .git -E .var'
+    local cmd = 'fd -t f -t l -H -E .git -E .venv'
     if vim.fn.getcwd() == vim.fn.expand('~') then
-        cmd = cmd .. ' --max-depth 1'
+        cmd = cmd .. ' -E .var --max-depth 1'
     end
     cmd = cmd .. '| sort'
     pick.start({
